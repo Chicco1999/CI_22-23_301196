@@ -101,6 +101,6 @@ for N in [100, 500, 1000]:
         goal_test=goal_test,
         parent_state=parent_state,
         state_cost=state_cost,
-        priority_function=lambda s: state_cost[s] + h(s),
+        priority_function=lambda s: h(s),
         unit_cost=lambda a: len(a),
     )
