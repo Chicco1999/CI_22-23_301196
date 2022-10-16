@@ -11,7 +11,7 @@ solution, and the cost of such expansion is given by the length of the list.
 The algorithm that has been chosen is a A* type of alghoritm, using as a heuristic function the number of elements that
 a given state is missing with respect to the solution. This approach provided optimal results for the smallest values
 of N (5,10,20). However, starting from N = 100 the complexity made it impossible to obtain a result in a reasonable time.
-The best results, as a compromise between time and quality of the solution, have been obtained by using a greedy best-first approach, using the pre-define heuristics as the priority function
+The best results, as a compromise between time and quality of the solution, have been obtained by using a greedy best-first approach, using the pre-defined heuristics as the priority function
 
 ## Results
 
