@@ -67,10 +67,10 @@ def crossover(g1,g2):
 
 def mutate(ind):
     while True:
-        new_list = random.choice(range(len(all_lists)))
+        new_list = random.choice(range(all_lists.size))
         if new_list not in ind:
             break
-        ind[random.randrange(0,len(ind))] = new_list
+        ind[random.randrange(0,ind.size)] = new_list
     return ind
 
 def evolution(N,pop_size,off_size,generations):
@@ -85,16 +85,18 @@ def evolution(N,pop_size,off_size,generations):
             p1 = tournament(population,2 + N//50)
             p2 = tournament(population,2 + N//50)
             o = crossover(p1,p2)
-            if random.random() < 0.2:
+            if random.random() < 0.3:
                 o = mutate(o)
             offspring.append(o)
-        population = offspring
+        population += offspring
         gen_best = max(population,key = lambda i:fitness(i))
         if fitness(gen_best) > fitness(best):
             best = gen_best
             #print(f"new best candidate with w={sum(len(all_lists[_])for _ in best):,} in generation={g:,}")
-    print(f"best candidate with w={sum(len(all_lists[_])for _ in best):,}")
-    print(list(all_lists[_] for _ in best))
+        population = sorted(population, key=lambda i: fitness(i),reverse=True)[:pop_size]
+    if goal_test(best,N):
+        print(f"best candidate for N={N:,} with w={sum(len(all_lists[_])for _ in best):,}")
+        print(list(all_lists[_] for _ in best))
 
 for N in [5,10,20,100,500,1000]:
     evolution(N,500,500,100)
