@@ -62,9 +62,7 @@ def crossover(g1,g2):
     i = s1.intersection(s2)
     if len(i):
         off = np.array([i])
-    cut1 = math.floor(g1.size/2)
-    cut2 = math.floor(g2.size/2)
-    off = np.concatenate([g1[:cut1+1],g2[cut2:]])
+    off = np.concatenate([g1[:g1.size//2+1],g2[g2.size//2:]])
     return off
 
 def mutate(ind):
@@ -98,5 +96,5 @@ def evolution(N,pop_size,off_size,generations):
     print(f"best candidate with w={sum(len(all_lists[_])for _ in best):,}")
     print(list(all_lists[_] for _ in best))
 
-for N in [5,10,20,100,100,1000]:
+for N in [5,10,20,100,500,1000]:
     evolution(N,500,500,100)
