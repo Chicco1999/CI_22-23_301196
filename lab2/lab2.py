@@ -1,5 +1,4 @@
 import random
-import math
 import numpy as np
 from turtle import st
 def problem(N, seed=None):
@@ -8,7 +7,6 @@ def problem(N, seed=None):
         tuple(set(random.randint(0, N - 1) for n in range(random.randint(N // 5, N // 2))))
         for n in range(random.randint(N, N * 5))
     ])
-import logging
 
 all_lists = None
 
