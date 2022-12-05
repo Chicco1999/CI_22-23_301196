@@ -76,7 +76,7 @@ After running the genetic algorithm with the following parameters
     POP_SIZE = 40
     N_GENS = 50
     MUTATION_RATE = 0.4
-    CROSSOVER_RATE = 0.7
+    CROSSOVER_RATE = 0.3
 
 The best candidate had the following parameters
 

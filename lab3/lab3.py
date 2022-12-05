@@ -203,12 +203,12 @@ def evolution():
     POP_SIZE = 40
     N_GENS = 50
     MUTATION_RATE = 0.4
-    CROSSOVER_RATE = 0.7
+    CROSSOVER_RATE = 0.3
 
     population = init_population(POP_SIZE)
     best = sorted(population,key= lambda i: i[1],reverse=True)[0]  #Pick the initial best
-    for _ in range(N_GENS):
-        print(f"generation {_}")
+    for gen in range(N_GENS):
+        print(f"generation {gen}")
         offspring = list()
         for ind in population:
             if random.random() < MUTATION_RATE:
@@ -216,17 +216,18 @@ def evolution():
                 offspring.append([mutated,evaluate(make_strategy(mutated)),evaluate(make_strategy(mutated),make_strategy(best[0]))])
             ind[1] = evaluate(make_strategy(ind[0]))
             ind[2] = evaluate(make_strategy(ind[0]),make_strategy(best[0]))
-        if random.random() < CROSSOVER_RATE:
-            parent1 = tournament(population)
-            parent2 = tournament(population)
-            child = crossover(parent1[0],parent2[0])
-            offspring.append([child,evaluate(make_strategy(child)),evaluate(make_strategy(child),make_strategy(best[0]))])
-        population += offspring
-        population = sorted(population,key= lambda i: i[1],reverse=True)[:POP_SIZE]
+            offspring.append(ind)
+        for _ in offspring:
+            if random.random() < CROSSOVER_RATE:
+                parent1 = tournament(population)
+                parent2 = tournament(population)
+                child = crossover(parent1[0],parent2[0])
+                offspring.append([child,evaluate(make_strategy(child)),evaluate(make_strategy(child),make_strategy(best[0]))])
+        population = sorted(offspring,key= lambda i: i[1],reverse=True)[:POP_SIZE]
         if population[0][1] >= best[1] and population[0][2] > 0.5:
             best = deepcopy(population[0])
-            print(f"New best at generation {_} with genome {best[0]} and winrate {best[1]} against random and {best[2]} against the previous best agent")
-    print(f"Final result with genome {best[0]} and winrate {best[2]} against the previous best, {best[1]} against the random strategy and {evaluate(make_strategy(best[0]),optimal_startegy)}")
+            print(f"New best at generation {gen} with genome {best[0]} and winrate {best[1]} against random and {best[2]} against the previous best agent")
+    print(f"Final result with genome {best[0]} and winrate {best[2]} against the previous best, {best[1]} against the random strategy and {evaluate(make_strategy(best[0]),optimal_startegy)} against the optimal strategy")
     return best
 
 #Tournament selection for crossover parents
