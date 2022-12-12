@@ -92,6 +92,20 @@ The best candidate had the following parameters
 
 And it achieved a **100%** win rate against both the pure random agent and the previous best solution, but a **0%** win rate agains the optimal strategy.
 
+
+## Strategy 3: MinMax*
+
+## Strategy 4: Reinforcement learning*
+
+
+
+
+
+* (12/12/2022) Due to personal reasons, I am not able to provide a working example of these types of agents in time for the official deadline. 
+I will do my best to provide functional solutions by the end of this week.
+
+
+
 ## Yanking
 
 Some of the functions and data structures used are the some as those presented by **Prof. Squillero**, albeit some minor modification. Some examples are:<br>
