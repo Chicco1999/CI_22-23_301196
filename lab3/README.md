@@ -93,7 +93,36 @@ The best candidate had the following parameters
 And it achieved a **100%** win rate against both the pure random agent and the previous best solution, but a **0%** win rate agains the optimal strategy.
 
 
-## Strategy 3: MinMax*
+## Strategy 3: MinMax
+
+The third strategy is based on deriving an agent using MinMax techniques.
+
+### State evaluation
+
+The states, represented by the **current board** can be evaluated as **0, 1** or **-1**.<br>
+A state is evaluated as **-1** when the agent has **already lost** (the board is empty) or (since optimal play from the opponent is assumed) if the current state has **nim sum equal to 0**.<br>
+A state is evaluated as **1** when **victory is guaranteed** (only one non-empty row left on the board)<br>
+All other states are evaluated as **0**
+
+### Memoization
+
+The state tree is generated with **no depth bounds**, some keeping track of previously considered states is essential.<br>
+To do this, **tuples** representing states are used to access 2 dictionaries: **knownStates** and **actions**.<br>
+The former stores, for each state, its evaluation, while the latter stores the ply that is been previously decided to make in that state.
+
+### Algorithm
+
+Whenever **minMax** is called on a given state, it is checked whether it was previously encountered. If so, the corresponding action is **immediately** returned.<br>
+Otherwise, the state is evaluated: if the result is **1**, the winning action is taken immediately; if the result is **-1** an item is removed from the first active row (if it exists) since against an optimal strategy every move would have the same losing outcome.
+
+If the state is **neutral**, then all the possible moves starting from that state are considered and the hypotetical **following state** is visited recursively.<br>
+In order to prune useless branches, a bound is initialized before iterating on the possible moves and branches that are sure not to be chosen by agent are discarded.<br>
+Following the MinMax strategy, each height level in the state tree is alternated between **minimization** and **maximization**.
+
+## Results
+
+Playing **100** games (**50** as player 1 and **50** as player 2) on a board with **6** rows, the MinMax agent is able to achieve a **100%** winrate against the random strategy and a **50%** winrate against the optimal strategy
+
 
 ## Strategy 4: Reinforcement learning*
 
@@ -101,7 +130,7 @@ And it achieved a **100%** win rate against both the pure random agent and the p
 
 
 
-* (12/12/2022) Due to personal reasons, I am not able to provide a working example of these types of agents in time for the official deadline. 
+* (13/12/2022) Due to personal reasons, I am not able to provide a working example of this type of agent in time for the official deadline. 
 I will do my best to provide functional solutions by the end of this week.
 
 
@@ -109,4 +138,4 @@ I will do my best to provide functional solutions by the end of this week.
 ## Yanking
 
 Some of the functions and data structures used are the some as those presented by **Prof. Squillero**, albeit some minor modification. Some examples are:<br>
-the **Nim** class and the **Nimply** data structure, the functions **evaluate**,**make_strategy**,**pure_random**,**cook_status**,**nim_sum**,**optimal_strategy**
+the **Nim** class and the **Nimply** data structure, the functions **evaluate**,**make_strategy**,**pure_random**,**cook_status**,**nim_sum**,**optimal_strategy** and the overall structure of the **MinMax approach for tic-tac-toe** shown during the lectures
