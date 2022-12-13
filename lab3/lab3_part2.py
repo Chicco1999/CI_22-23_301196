@@ -5,8 +5,6 @@ from typing import Callable
 from copy import deepcopy
 from itertools import accumulate
 from operator import xor
-from math import ceil
-import numpy as np
 
 NUM_MATCHES = 50
 NIM_SIZE = 6
@@ -85,12 +83,12 @@ actions = dict()
 knownStates = dict()
 
 
-def nextState(state: Nim,action) -> Nim:
+def nextState(state: Nim,action) -> Nim: #Generate the following state without modifying the pre-existing one
     newState = deepcopy(state)
     newState.nimming(Nimply(action[0],action[1]))
     return newState
 
-def MMagent(state: Nim) -> Nimply:
+def MMagent(state: Nim) -> Nimply:  #Wrapper for the recursive agent
 
     ply = minMax(state)
     return Nimply(ply[0][0],ply[0][1])
