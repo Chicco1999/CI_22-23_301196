@@ -124,14 +124,25 @@ Following the MinMax strategy, each height level in the state tree is alternated
 Playing **100** games (**50** as player 1 and **50** as player 2) on a board with **6** rows, the MinMax agent is able to achieve a **100%** winrate against the random strategy and a **50%** winrate against the optimal strategy
 
 
-## Strategy 4: Reinforcement learning*
+## Strategy 4: Reinforcement learning
 
+The approached followed is similar to the one presented for the **maze** during lectures. The trainee agent, at each move, randomly chooses to perform a **random move** or a **policy driven** move
 
+### State initialization
 
+In order to avoid initializing a reward for every single possible state at once, rewards for each state are inizialized every time the agent discovers a new state. The initial value is set to **-0.5**, which means that the agent is doubtful of states that have never been seen before.
 
+### Rewards
 
-* (13/12/2022) Due to personal reasons, I am not able to provide a working example of this type of agent in time for the official deadline. 
-I will do my best to provide functional solutions by the end of this week.
+The reward for a state is calculated at the end of each move (**both** the trainee and the training opponent), **clear** winning and losing states are valued as **+/- 5** while states with **only one row left** are valued as **+/- 3** because they can potentially take to the end of the game; **neutral** states have a reward of **0**.
+
+### Learning
+
+At the end of each game, the **state history** is scanned and rewards are adjusted based on the result of the game. Also, the **random factor** is changed according to the reward accumulated during the course of the game: if the result is a loss, the random factor is slightly **increased**, while it's **decreased** if the result was a win.
+
+### Results
+
+After **2000** games of training (**1000** against **pure random** and then **1000** against the **optimal strategy**), the end result is around a **40%** win rate against the **pure random** (not very promising) and around **20%** win rate against the **optimal strategy**. This is rather surprising, it seems that the agent is capable of playing optimally but that doesn't seem to be very effective against all other kinds of agents.
 
 
 
